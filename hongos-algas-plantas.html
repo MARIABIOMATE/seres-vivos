@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hongos, algas y plantas · Repaso 1º ESO</title>
+<style>
+:root{
+  --bosque:#24503a; --bosque2:#2f6b4a; --hoja:#4f9a4f; --musgo:#9cc15e; --crema:#f5f2e6;
+  --papel:#fffdf6; --flor:#b8467a; --tierra:#8a6440; --tinta:#1f2a22; --gris:#6b7568;
+  --ok:#2e8b57; --okbg:#e3f4e8; --mal:#c0392b; --malbg:#fbe5e1; --sombra:0 6px 20px rgba(36,80,58,.15);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--tinta);
+  background:linear-gradient(160deg,#eaf3df 0%,#f5f2e6 45%,#e6efe0 100%);min-height:100vh;font-size:17px;line-height:1.5}
+header{background:linear-gradient(120deg,var(--bosque),var(--bosque2));color:#fff;padding:14px 18px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5;box-shadow:var(--sombra)}
+header h1{font-size:1.15rem;margin:0;flex:1;font-weight:700;letter-spacing:.2px}
+header .alumno{font-size:.9rem;opacity:.9}
+.btn-casa{background:rgba(255,255,255,.15);border:none;color:#fff;font-size:1.3rem;border-radius:10px;padding:6px 10px;cursor:pointer}
+.btn-casa:hover{background:rgba(255,255,255,.28)}
+main{max-width:920px;margin:0 auto;padding:20px 16px 60px}
+.tarjeta{background:var(--papel);border-radius:18px;box-shadow:var(--sombra);padding:22px;margin-bottom:18px}
+h2{color:var(--bosque);margin:.2em 0 .6em;font-size:1.45rem}
+h3{color:var(--bosque2);margin:1.1em 0 .4em;font-size:1.12rem}
+.btn{display:inline-flex;align-items:center;gap:8px;border:none;border-radius:12px;padding:12px 20px;font-size:1rem;font-weight:600;cursor:pointer;transition:transform .1s,box-shadow .1s;font-family:inherit}
+.btn:active{transform:scale(.97)}
+.btn-pri{background:var(--hoja);color:#fff;box-shadow:0 3px 0 #367336}
+.btn-pri:hover{background:#458c45}
+.btn-sec{background:#e9efe2;color:var(--bosque)}
+.btn-sec:hover{background:#dde7d3}
+.btn-flor{background:var(--flor);color:#fff;box-shadow:0 3px 0 #8d3159}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.fila{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+input[type=text]{width:100%;padding:14px;border:2px solid #cfdcc4;border-radius:12px;font-size:1.05rem;font-family:inherit;background:#fff}
+input[type=text]:focus{outline:none;border-color:var(--hoja)}
+/* Inicio */
+.portada{text-align:center;padding:34px 22px}
+.portada .iconos{font-size:3rem;letter-spacing:8px}
+.portada h2{font-size:1.9rem;margin-top:10px}
+.portada p{color:var(--gris)}
+.portada form{max-width:420px;margin:22px auto 0}
+/* Menú */
+.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.bloque{border:none;text-align:left;background:var(--papel);border-radius:16px;padding:16px;cursor:pointer;box-shadow:var(--sombra);border-left:8px solid var(--c);transition:transform .12s;font-family:inherit;color:inherit;font-size:1rem}
+.bloque:hover{transform:translateY(-3px)}
+.bloque .ico{font-size:2rem}
+.bloque .tit{font-weight:700;color:var(--bosque);margin:4px 0 2px;font-size:1.05rem}
+.bloque .sub{font-size:.88rem;color:var(--gris)}
+.barra{height:8px;background:#e5ebdd;border-radius:6px;margin-top:10px;overflow:hidden}
+.barra>span{display:block;height:100%;background:var(--c);border-radius:6px}
+.mejor{font-size:.82rem;color:var(--gris);margin-top:4px}
+.simulacro{background:linear-gradient(120deg,#fff4f8,#fffdf6);border-left-color:var(--flor)}
+/* Teoría */
+.teoria p{margin:.5em 0}
+.teoria b{color:var(--bosque)}
+.def{background:#eef6e6;border-left:5px solid var(--hoja);border-radius:10px;padding:10px 14px;margin:10px 0}
+.def::before{content:"📌 ";}
+.ojo{background:#fff4e5;border-left:5px solid #e0a03a;border-radius:10px;padding:10px 14px;margin:10px 0}
+.ojo::before{content:"⚠️ ";}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:10px 0}
+.caja{background:#fff;border:2px solid #dfe8d5;border-radius:12px;padding:10px 12px}
+.caja h4{margin:0 0 4px;color:var(--flor);font-size:1rem}
+.caja ul{margin:4px 0;padding-left:18px}
+.teoria ul{padding-left:20px}
+.esquema{display:flex;justify-content:center;margin:10px 0}
+.esquema svg{width:100%;max-width:360px;height:auto;background:#fbfdf7;border-radius:14px;border:2px solid #e1e9d8}
+.leyenda{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;margin:0 0 12px;font-size:.95rem}
+.leyenda b{display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--flor);color:#fff;align-items:center;justify-content:center;font-size:.8rem;margin-right:3px}
+/* Quiz */
+.cabeza-quiz{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.progreso{flex:1;min-width:150px;height:12px;background:#e5ebdd;border-radius:8px;overflow:hidden}
+.progreso span{display:block;height:100%;background:linear-gradient(90deg,var(--hoja),var(--musgo));transition:width .3s}
+.contador{font-weight:700;color:var(--bosque);font-size:.95rem}
+.enunciado{font-size:1.12rem;font-weight:600;margin:6px 0 14px}
+.tipo{display:inline-block;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;background:var(--bosque2);padding:3px 10px;border-radius:20px;margin-bottom:6px}
+.opciones{display:grid;gap:10px}
+.opc{border:2px solid #d5e0ca;background:#fff;border-radius:12px;padding:13px 15px;text-align:left;font-size:1rem;cursor:pointer;font-family:inherit;color:inherit;transition:border-color .1s,background .1s}
+.opc:hover:not(:disabled){border-color:var(--hoja);background:#f4f9ef}
+.opc.ok{border-color:var(--ok);background:var(--okbg);font-weight:600}
+.opc.mal{border-color:var(--mal);background:var(--malbg)}
+.opc:disabled{cursor:default}
+.vf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.vf .opc{text-align:center;font-size:1.1rem;font-weight:700}
+.parejas{display:grid;gap:9px}
+.pareja{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;background:#fff;border:2px solid #e1e9d8;border-radius:12px;padding:9px 12px}
+.pareja.ok{border-color:var(--ok);background:var(--okbg)}
+.pareja.mal{border-color:var(--mal);background:var(--malbg)}
+.pareja .izq{font-weight:600}
+select{width:100%;padding:9px;border-radius:10px;border:2px solid #cfdcc4;font-size:.97rem;font-family:inherit;background:#fff}
+.correcta{font-size:.85rem;color:var(--ok);font-weight:600;grid-column:1/-1}
+.huecos{font-size:1.08rem;line-height:2.4}
+.huecos select{width:auto;display:inline-block;padding:5px 8px;margin:0 3px}
+.huecos select.ok{border-color:var(--ok);background:var(--okbg)}
+.huecos select.mal{border-color:var(--mal);background:var(--malbg)}
+.orden-pool{display:grid;gap:8px;margin-bottom:12px}
+.orden-sel{display:grid;gap:8px;min-height:50px;border:2px dashed #c6d6b8;border-radius:12px;padding:10px;margin-bottom:8px;background:#fafcf6}
+.paso{display:flex;gap:10px;align-items:center;background:#fff;border:2px solid #d5e0ca;border-radius:10px;padding:10px 12px;cursor:pointer;text-align:left;font-family:inherit;font-size:.98rem;color:inherit}
+.paso .n{flex:0 0 28px;height:28px;border-radius:50%;background:var(--hoja);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem}
+.paso.ok{border-color:var(--ok);background:var(--okbg)}
+.paso.mal{border-color:var(--mal);background:var(--malbg)}
+.vacio{color:var(--gris);font-size:.9rem;text-align:center}
+.feedback{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:1rem}
+.feedback.ok{background:var(--okbg);border:2px solid var(--ok)}
+.feedback.mal{background:var(--malbg);border:2px solid var(--mal)}
+.feedback.medio{background:#fff4e5;border:2px solid #e0a03a}
+.feedback .t{font-weight:800;font-size:1.1rem;margin-bottom:4px}
+.dibujo{display:flex;justify-content:center;margin:4px 0 14px}
+.dibujo svg{width:100%;max-width:380px;height:auto;background:#fbfdf7;border-radius:14px;border:2px solid #e1e9d8}
+/* Resultado */
+.nota{font-size:3.4rem;font-weight:800;color:var(--bosque);text-align:center;margin:6px 0}
+.estrellas{text-align:center;font-size:2rem;letter-spacing:4px}
+.centro{text-align:center}
+.lista-fallos{margin:10px 0;padding-left:20px}
+.lista-fallos li{margin:5px 0}
+@media (max-width:560px){
+  .pareja{grid-template-columns:1fr}
+  body{font-size:16px}
+  .tarjeta{padding:16px}
+}
+</style>
+</head>
+<body>
+<header id="cab" style="display:none">
+  <button class="btn-casa" title="Inicio" onclick="irInicio()">🏠</button>
+  <h1>🍄 Hongos, algas y plantas</h1>
+  <span class="alumno" id="nomCab"></span>
+</header>
+<main id="app"></main>
+
+<script>
+/* ================== DIBUJOS SVG ================== */
+const NUM = (x,y,n)=>`<g><circle cx="${x}" cy="${y}" r="13" fill="#b8467a" stroke="#fff" stroke-width="2"/><text x="${x}" y="${y+5}" font-size="14" font-weight="700" text-anchor="middle" fill="#fff" font-family="Arial">${n}</text></g>`;
+const LINEA=(x1,y1,x2,y2)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#555" stroke-width="1.5"/>`;
+
+const SVG = {
+seta: `<svg viewBox="0 0 340 320" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="230" width="340" height="90" fill="#9b7653"/>
+  <rect x="0" y="222" width="340" height="12" fill="#6e9b4a"/>
+  <g stroke="#f1e3b5" stroke-width="2" fill="none" opacity=".9">
+    <path d="M150 238 C120 255 90 250 60 270 S20 290 10 300"/><path d="M170 240 C200 260 240 250 270 275 S310 290 330 300"/>
+    <path d="M160 240 C150 270 170 290 150 315"/><path d="M120 252 C110 270 80 280 70 300"/><path d="M220 255 C230 275 255 285 260 310"/>
+  </g>
+  <path d="M140 232 Q160 205 182 232 Z" fill="#efe6d4" stroke="#b9a988" stroke-width="2"/>
+  <path d="M148 228 L150 120 L172 120 L174 228 Z" fill="#f3ede0" stroke="#bdb197" stroke-width="2"/>
+  <path d="M140 140 Q161 158 182 140 L178 152 Q161 166 144 152 Z" fill="#e6dcc6" stroke="#b3a585" stroke-width="2"/>
+  <path d="M70 118 Q160 20 252 118 Z" fill="#c0392b" stroke="#8e2a20" stroke-width="2"/>
+  <g fill="#fff"><circle cx="120" cy="85" r="7"/><circle cx="160" cy="62" r="8"/><circle cx="200" cy="82" r="7"/><circle cx="140" cy="100" r="5"/><circle cx="185" cy="105" r="5"/><circle cx="225" cy="105" r="4"/><circle cx="100" cy="108" r="4"/></g>
+  <path d="M72 118 L250 118 L235 126 L87 126 Z" fill="#f1e7cf" stroke="#b3a585" stroke-width="1.5"/>
+  <g stroke="#b3a585" stroke-width="1">${[...Array(16)].map((_,i)=>`<line x1="${92+i*9.5}" y1="119" x2="${94+i*9.3}" y2="125"/>`).join('')}</g>
+  ${LINEA(215,95,290,50)}${NUM(302,44,1)}
+  ${LINEA(235,123,292,140)}${NUM(304,144,2)}
+  ${LINEA(182,146,240,175)}${NUM(252,180,3)}
+  ${LINEA(150,195,90,195)}${NUM(76,195,4)}
+  ${LINEA(180,225,240,215)}${NUM(252,212,5)}
+  ${LINEA(60,270,40,250)}${NUM(30,240,6)}
+</svg>`,
+
+flor: `<svg viewBox="0 0 360 330" xmlns="http://www.w3.org/2000/svg">
+  <path d="M180 330 L180 255" stroke="#3f8a3a" stroke-width="10"/>
+  <path d="M180 255 Q130 250 110 215 Q150 225 180 240 Z" fill="#4f9a4f"/>
+  <path d="M180 255 Q230 250 250 215 Q210 225 180 240 Z" fill="#4f9a4f"/>
+  <path d="M180 250 C40 240 30 120 70 95 C110 110 140 170 175 225 Z" fill="#f7c6d9" stroke="#c76b93" stroke-width="2"/>
+  <path d="M180 250 C320 240 330 120 290 95 C250 110 220 170 185 225 Z" fill="#f7c6d9" stroke="#c76b93" stroke-width="2"/>
+  <ellipse cx="180" cy="222" rx="26" ry="30" fill="#7cbf5a" stroke="#3f7a2e" stroke-width="2"/>
+  <ellipse cx="173" cy="225" rx="5" ry="7" fill="#f2d16b" stroke="#b1902a"/><ellipse cx="187" cy="218" rx="5" ry="7" fill="#f2d16b" stroke="#b1902a"/>
+  <rect x="176" y="120" width="8" height="75" fill="#9fcf6d" stroke="#5f9a3b"/>
+  <path d="M164 122 Q180 98 196 122 Z" fill="#b7d75a" stroke="#6f8f2b" stroke-width="2"/>
+  <g stroke="#b88a2a" stroke-width="2.5"><path d="M165 215 Q120 170 112 130" fill="none"/><path d="M195 215 Q240 170 248 130" fill="none"/><path d="M168 210 Q145 160 145 118" fill="none"/><path d="M192 210 Q215 160 215 118" fill="none"/></g>
+  <g fill="#e8a33a" stroke="#a5651d" stroke-width="1.5"><ellipse cx="112" cy="124" rx="8" ry="12"/><ellipse cx="248" cy="124" rx="8" ry="12"/><ellipse cx="145" cy="111" rx="8" ry="12"/><ellipse cx="215" cy="111" rx="8" ry="12"/></g>
+  ${LINEA(196,112,240,70)}${NUM(252,62,1)}
+  ${LINEA(184,160,300,170)}${NUM(314,172,2)}
+  ${LINEA(206,232,300,240)}${NUM(314,242,3)}
+  ${LINEA(173,225,110,268)}${NUM(98,274,4)}
+  ${LINEA(145,100,110,62)}${NUM(98,54,5)}
+  ${LINEA(124,165,40,172)}${NUM(28,172,6)}
+  ${LINEA(70,120,40,110)}${NUM(28,104,7)}
+  ${LINEA(130,225,40,225)}${NUM(28,225,8)}
+</svg>`,
+
+musgo: `<svg viewBox="0 0 320 340" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="290" width="320" height="50" fill="#9b7653"/>
+  <path d="M150 290 L150 175" stroke="#6b8f2e" stroke-width="5"/>
+  <g fill="#7db43f" stroke="#4d7a22" stroke-width="1">${[...Array(9)].map((_,i)=>{const y=280-i*12;return `<ellipse cx="${i%2?136:164}" cy="${y}" rx="14" ry="5" transform="rotate(${i%2?25:-25} ${i%2?136:164} ${y})"/>`}).join('')}</g>
+  <g stroke="#6d4f2c" stroke-width="2" fill="none"><path d="M150 290 l-14 22"/><path d="M150 290 l0 28"/><path d="M150 290 l15 20"/><path d="M146 296 l-20 8"/><path d="M154 298 l20 6"/></g>
+  <path d="M150 175 Q156 120 168 72" stroke="#b07a35" stroke-width="3" fill="none"/>
+  <ellipse cx="172" cy="58" rx="11" ry="20" fill="#c9a24a" stroke="#8a6a22" stroke-width="2" transform="rotate(15 172 58)"/>
+  <path d="M168 40 Q176 18 186 30 Q182 44 176 46 Z" fill="#e6d58b" stroke="#9a8636" stroke-width="2"/>
+  ${LINEA(184,28,240,22)}${NUM(252,20,1)}
+  ${LINEA(181,62,240,72)}${NUM(252,74,2)}
+  ${LINEA(160,120,240,128)}${NUM(252,130,3)}
+  ${LINEA(166,262,240,240)}${NUM(252,236,4)}
+  ${LINEA(150,200,70,190)}${NUM(56,188,5)}
+  ${LINEA(136,312,70,318)}${NUM(56,318,6)}
+</svg>`,
+
+cereza: `<svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg">
+  <path d="M160 70 Q170 20 215 8" stroke="#5c7a2e" stroke-width="5" fill="none"/>
+  <circle cx="160" cy="170" r="105" fill="#b3122e"/>
+  <circle cx="160" cy="170" r="96" fill="#f2a3a8"/>
+  <circle cx="160" cy="170" r="45" fill="#c8a07a" stroke="#8c6a46" stroke-width="3"/>
+  <ellipse cx="160" cy="170" rx="26" ry="32" fill="#f3e2c2" stroke="#b39466" stroke-width="2"/>
+  ${LINEA(250,120,288,92)}${NUM(298,84,1)}
+  ${LINEA(90,140,36,110)}${NUM(26,102,2)}
+  ${LINEA(200,190,288,232)}${NUM(298,240,3)}
+  ${LINEA(160,175,60,262)}${NUM(48,270,4)}
+</svg>`,
+
+semilla: `<svg viewBox="0 0 340 280" xmlns="http://www.w3.org/2000/svg">
+  <path d="M168 40 C90 20 40 80 50 150 C60 220 130 250 168 230 Z" fill="#e8e1a6" stroke="#8f8650" stroke-width="5"/>
+  <path d="M172 40 C250 20 300 80 290 150 C280 220 210 250 172 230 Z" fill="#e8e1a6" stroke="#8f8650" stroke-width="5"/>
+  <path d="M170 40 L170 230" stroke="#cfc68a" stroke-width="2"/>
+  <path d="M170 92 Q156 118 168 150 Q176 175 172 205" stroke="#7a5c2e" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M168 95 Q150 70 140 78 Q150 92 166 99 Z" fill="#5f8f2e"/><path d="M170 95 Q186 66 198 72 Q188 90 172 99 Z" fill="#5f8f2e"/>
+  ${LINEA(52,120,22,120)}${NUM(16,108,1)}
+  ${LINEA(250,150,312,170)}${NUM(318,176,2)}
+  ${LINEA(146,82,70,40)}${NUM(60,32,3)}
+  ${LINEA(173,200,250,250)}${NUM(262,256,4)}
+</svg>`
+};
+
+const fig=(k,n)=>`<div class="esquema">${SVG[k]}</div><div class="leyenda">${n.map((x,i)=>`<span><b>${i+1}</b> ${x}</span>`).join("")}</div>`;
+/* ================== CONTENIDOS ================== */
+const BLOQUES = [
+{ id:"hongos", titulo:"Los hongos", ico:"🍄", c:"#c0392b", sub:"Micelio, seta, ciclo y tipos de nutrición",
+teoria:`
+<p>Los <b>hongos</b> son seres vivos <b>eucariotas heterótrofos</b> que forman el <b>reino Fungi</b>. No son ni animales ni plantas.</p>
+<div class="def"><b>Heterótrofo</b>: ser vivo que no fabrica su alimento; lo toma de otros seres o de sus restos.</div>
+<p>Pueden ser <b>unicelulares</b> (las <b>levaduras</b>) o <b>pluricelulares</b> (los <b>mohos</b> y los hongos que forman <b>setas</b>).</p>
+<h3>Partes de un hongo con seta</h3>
+<div class="cols">
+ <div class="caja"><h4>Micelio</h4>Parte <b>subterránea</b>: es el <b>verdadero cuerpo</b> del hongo. Sus células tienen paredes de <b>quitina</b> y forman filamentos llamados <b>hifas</b>. Absorbe agua y nutrientes.</div>
+ <div class="caja"><h4>Carpóforo (seta)</h4>Parte <b>visible</b>. Es el <b>órgano reproductor</b>: fabrica y dispersa las <b>esporas</b> (células reproductoras).
+  <ul><li><b>Pie</b>: a veces con <b>anillo</b> y con una envoltura en la base, la <b>volva</b>.</li><li><b>Sombrero</b>: debajo tiene <b>laminillas</b>, tubos o poros donde se forman las esporas.</li></ul></div>
+</div>
+${fig("seta",["Sombrero","Laminillas","Anillo","Pie","Volva","Micelio"])}
+<h3>Ciclo de un hongo</h3>
+<p>Las <b>laminillas</b> liberan <b>esporas</b> → caen al suelo y <b>germinan</b> → forman <b>hifas</b> → las hifas se ramifican y forman el <b>micelio</b> → del micelio sale un nuevo <b>carpóforo</b>.</p>
+<h3>¿Cómo se alimentan?</h3>
+<div class="cols">
+ <div class="caja"><h4>Saprófitos</h4>Viven sobre <b>materia orgánica en descomposición</b>. Segregan <b>enzimas</b> que descomponen los restos. <b>Reciclan</b>, fertilizan el suelo y «limpian» el bosque. Ej.: <b>champiñón</b>, <b>lepiota</b>.</div>
+ <div class="caja"><h4>Simbiontes</h4>El micelio se une a las <b>raíces</b> de una planta (p. ej. el pino) formando <b>micorrizas</b>. Los dos ganan: <b>beneficio mutuo</b>. Ej.: <b>níscalo</b>.</div>
+ <div class="caja"><h4>Parásitos</h4>Viven a costa de animales y plantas y causan <b>micosis</b>. En cultivos: <b>oídio</b>, <b>mildiu</b>. En personas: <b>tiña</b>, <b>pie de atleta</b>, <b>candidiasis</b>.</div>
+</div>
+<div class="cols">
+ <div class="caja"><h4>☠️ Venenosos</h4>Matamoscas (<i>Amanita muscaria</i>), ángel de la muerte (<i>Amanita verna</i>), boleto de Satanás (<i>Boletus satanas</i>).</div>
+ <div class="caja"><h4>🍽️ Comestibles</h4>Seta calabaza (<i>Boletus edulis</i>), seta ostra, lepiota (<i>Macrolepiota procera</i>), rebozuelo, níscalo, seta de cardo.</div>
+</div>
+<div class="ojo">No todos los hongos son setas: las levaduras y los mohos también son hongos.</div>`,
+preguntas:[
+ {t:"mc",q:"Los hongos son organismos…",o:["Eucariotas heterótrofos","Eucariotas autótrofos","Procariotas heterótrofos","Eucariotas fotosintéticos"],e:"Tienen núcleo (eucariotas) y no fabrican su alimento (heterótrofos)."},
+ {t:"mc",q:"¿Cuál es el verdadero cuerpo de un hongo que forma setas?",o:["El micelio","El carpóforo","El sombrero","La volva"],e:"El micelio, bajo tierra, es el cuerpo del hongo. La seta (carpóforo) es solo el órgano reproductor."},
+ {t:"mc",q:"Las paredes de las células de los hongos están formadas por…",o:["Quitina","Celulosa","Almidón","Clorofila"],e:"Quitina. La celulosa es propia de las plantas y las algas."},
+ {t:"tf",q:"Todos los hongos forman setas.",a:false,e:"Falso. Las levaduras (unicelulares) y los mohos son hongos y no forman setas."},
+ {t:"label",q:"Escribe el nombre de cada parte señalada en la seta.",svg:"seta",p:[["1","Sombrero"],["2","Laminillas"],["3","Anillo"],["4","Pie"],["5","Volva"],["6","Micelio"]]},
+ {t:"order",q:"Ordena las etapas del ciclo de un hongo.",p:["Las laminillas liberan las esporas","Las esporas caen al suelo y germinan","Se forman las hifas","Las hifas se ramifican y forman el micelio","Del micelio surge un nuevo carpóforo"]},
+ {t:"mc",q:"Almudena deja el sombrero de un champiñón boca abajo sobre una cartulina blanca toda la noche. Por la mañana aparece un dibujo con forma de abanico. ¿Qué lo ha formado?",o:["Las esporas que han caído desde las laminillas","Las hifas que han crecido sobre la cartulina","El agua que ha soltado el sombrero","Los restos del micelio pegados al pie"],e:"Las laminillas liberan esporas, las células reproductoras que permiten formar nuevos hongos."},
+ {t:"match",q:"Clasifica cada hongo según su forma de alimentarse.",p:[["Champiñón","Saprófito"],["Níscalo unido a las raíces del pino","Simbionte"],["Hongo que causa la candidiasis","Parásito"],["Oídio que arruina cosechas","Parásito"],["Lepiota","Saprófito"]],opts:["Saprófito","Simbionte","Parásito"]},
+ {t:"mc",q:"¿Qué es una micorriza?",o:["La unión del micelio de un hongo con las raíces de una planta, con beneficio para los dos","La unión de un hongo con un alga verde","Una enfermedad que provoca un hongo en las raíces","La parte del sombrero donde se forman las esporas"],e:"En la micorriza la planta absorbe mejor los nutrientes y el hongo recibe alimento y protección. ¡Ojo! Hongo + alga es un liquen."},
+ {t:"match",q:"¿Comestible o venenoso?",p:[["Matamoscas (Amanita muscaria)","Venenoso"],["Ángel de la muerte (Amanita verna)","Venenoso"],["Boleto de Satanás","Venenoso"],["Níscalo","Comestible"],["Rebozuelo","Comestible"],["Seta calabaza (Boletus edulis)","Comestible"]],opts:["Comestible","Venenoso"]},
+ {t:"fill",q:"Completa el texto.",x:"Los hongos saprófitos segregan unas sustancias llamadas [[enzimas|hifas|esporas|micorrizas]] que descomponen los restos de seres vivos. Así [[reciclan|contaminan|consumen]] la materia y ayudan a [[fertilizar|erosionar|secar]] el suelo."},
+ {t:"mc",q:"¿Cuál de estas enfermedades NO está causada por un hongo?",o:["La gripe","La tiña","El pie de atleta","La candidiasis"],e:"La gripe la causa un virus. Las otras tres son micosis."}
+]},
+
+{ id:"algas", titulo:"Las algas", ico:"🌊", c:"#2a8c8c", sub:"Talo, fitoplancton y algas pardas, verdes y rojas",
+teoria:`
+<p>Las <b>algas</b> son organismos <b>eucariotas fotosintéticos</b>, <b>unicelulares</b> o <b>pluricelulares</b>, del <b>reino Protista</b>. Se reproducen de forma sexual y asexual y viven en el <b>agua</b>, dulce o salada.</p>
+<div class="def"><b>Fotosintético</b>: fabrica su propio alimento usando la luz del Sol.</div>
+<p>Se parecen a las plantas porque tienen paredes de <b>celulosa</b> y <b>clorofila</b>, y hacen la <b>fotosíntesis</b>. Producen gran parte del <b>oxígeno</b> de la Tierra y son el <b>primer eslabón de la cadena alimentaria</b> de los océanos.</p>
+<div class="cols">
+ <div class="caja"><h4>Unicelulares</h4>Flotan a la deriva y forman parte del <b>fitoplancton</b>. Algunas forman <b>colonias</b>, como el <b>volvox</b>.</div>
+ <div class="caja"><h4>Pluricelulares</h4>Viven en el fondo, <b>sujetas a las rocas</b>, donde llega la luz. <b>No tienen tejidos ni órganos</b>: su cuerpo es un <b>talo</b> con:
+  <ul><li><b>Rizoides</b> (parecidos a raíces)</li><li><b>Cauloide</b> (parecido al tallo)</li><li><b>Filoides</b> (parecidos a hojas)</li></ul></div>
+</div>
+<h3>Algas pluricelulares según su pigmento</h3>
+<div class="cols">
+ <div class="caja"><h4 style="color:#8a6440">Algas pardas</h4>Pigmento pardo, más sensible a la luz que la clorofila → viven a <b>mayor profundidad</b>. Algunas flotan (<b>fucus</b>); las <b>algas kelp</b> forman bosques de más de <b>60 m</b>. Ej.: <i>Laminaria</i>, <i>Macrocystis</i>.</div>
+ <div class="caja"><h4 style="color:#3f8a3a">Algas verdes</h4>Su color es la <b>clorofila</b>, que solo capta la luz de la superficie → viven en <b>aguas poco profundas</b>. Ej.: <i>Ulva</i> (lechuga de mar).</div>
+ <div class="caja"><h4 style="color:#b8467a">Algas rojas</h4>Pigmento rojo, el <b>más sensible</b> a la luz → viven donde la <b>luz es muy tenue</b>. Ej.: <i>Gracilaria</i>, <i>Chondrus</i>, <i>Gelidium</i> (ocle).</div>
+</div>
+<div class="ojo">Las algas pluricelulares NO tienen raíz, tallo ni hojas verdaderos: tienen rizoides, cauloide y filoides.</div>`,
+preguntas:[
+ {t:"mc",q:"Las algas pertenecen al reino…",o:["Protista","Plantas","Fungi","Moneras"],e:"Según el libro, las algas son del reino Protista."},
+ {t:"mc",q:"¿En qué se parecen las algas a las plantas?",o:["Tienen paredes de celulosa y clorofila, y hacen la fotosíntesis","Tienen raíz, tallo y hojas","Forman flores y semillas","Tienen paredes de quitina"],e:"Celulosa + clorofila + fotosíntesis. No tienen órganos verdaderos."},
+ {t:"tf",q:"Las algas pluricelulares tienen raíz, tallo y hojas verdaderos.",a:false,e:"Falso. Tienen un talo con rizoides, cauloide y filoides, que solo se parecen a esos órganos."},
+ {t:"match",q:"Relaciona cada parte del talo con su descripción.",p:[["Rizoides","Fijan el alga a la roca; parecidos a raíces"],["Cauloide","Parecido al tallo"],["Filoides","Parecidos a las hojas"],["Talo","Cuerpo sencillo del alga, sin tejidos ni órganos"]]},
+ {t:"match",q:"Clasifica cada alga en su grupo.",p:[["Ulva (lechuga de mar)","Alga verde"],["Fucus","Alga parda"],["Kelp gigante","Alga parda"],["Gelidium (ocle)","Alga roja"],["Chondrus crispus","Alga roja"],["Laminaria","Alga parda"]],opts:["Alga verde","Alga parda","Alga roja"]},
+ {t:"mc",q:"Un buceador baja a una zona donde la luz llega muy débil. ¿Qué algas tiene más probabilidad de encontrar allí?",o:["Algas rojas","Algas verdes","Ninguna: sin luz fuerte no hay algas","Solo algas unicelulares del fitoplancton"],e:"El pigmento rojo es el más sensible a la luz, por eso las algas rojas viven donde la luz es muy tenue."},
+ {t:"mc",q:"¿Por qué las algas verdes viven en aguas poco profundas?",o:["Porque la clorofila solo capta bien la luz superficial","Porque necesitan agua dulce","Porque son todas unicelulares","Porque no soportan la sal del mar"],e:"La clorofila capta la luz que llega a poca profundidad."},
+ {t:"mc",q:"¿Qué es el fitoplancton?",o:["Algas unicelulares que flotan a la deriva","Bosques de algas kelp","Algas que viven sujetas al fondo","Hongos que viven en el mar"],e:"El fitoplancton lo forman algas unicelulares que flotan."},
+ {t:"tf",q:"Las algas producen gran parte del oxígeno de la Tierra y son el primer eslabón de la cadena alimentaria de los océanos.",a:true,e:"Verdadero. Al hacer la fotosíntesis liberan oxígeno y sirven de alimento a otros seres."},
+ {t:"mc",q:"El volvox es…",o:["Una colonia de algas verdes unicelulares","Un alga parda gigante","Un alga roja que vive a gran profundidad","Un liquen marino"],e:"El volvox es una colonia de algas verdes unicelulares."},
+ {t:"fill",q:"Completa el texto.",x:"Las algas son organismos [[eucariotas|procariotas]] [[fotosintéticos|heterótrofos|parásitos]]. Las algas [[pardas|verdes]] pueden vivir a más profundidad que las verdes porque su pigmento es más sensible a la [[luz|sal|temperatura]]."}
+]},
+
+{ id:"liquenes", titulo:"Los líquenes", ico:"🪨", c:"#d08a1e", sub:"Simbiosis e indicadores de contaminación",
+teoria:`
+<p>Los <b>líquenes</b> son <b>asociaciones simbióticas</b> entre un <b>hongo</b> (filamentoso o levadura) y un <b>alga verde</b> o una <b>cianobacteria</b>.</p>
+<div class="def"><b>Simbiosis</b>: relación entre dos seres vivos en la que <b>los dos salen beneficiados</b>.</div>
+<p>Juntos pueden vivir en lugares muy duros (piedras, cortezas) donde <b>por separado no sobrevivirían</b>.</p>
+<div class="cols">
+ <div class="caja"><h4>El hongo aporta…</h4>Un entramado de hifas que da un <b>ambiente húmedo</b> y las <b>sales minerales</b> que el alga necesita.</div>
+ <div class="caja"><h4>El alga aporta…</h4>Los <b>azúcares</b> y otros nutrientes que fabrica con la <b>fotosíntesis</b>.</div>
+</div>
+<div class="cols">
+ <div class="caja"><h4>Rupícolas</h4>Viven sobre <b>piedras</b>.</div>
+ <div class="caja"><h4>Cortícolas</h4>Viven sobre la <b>corteza</b> de los árboles.</div>
+</div>
+<p>Crecen <b>muy despacio</b>, pero algunos llegan a vivir <b>4000 años</b>.</p>
+<h3>Indicadores de contaminación</h3>
+<p>Son buenos <b>indicadores de la contaminación atmosférica</b>: no tienen estructuras que los protejan y <b>absorben las sustancias disueltas en el agua de lluvia</b>. Si el agua lleva contaminantes, el liquen muere.</p>
+<p>👉 Muchos líquenes variados = aire limpio. Pocos líquenes = aire contaminado.</p>
+<div class="ojo">No confundas: <b>hongo + alga</b> = liquen. <b>Hongo + raíz</b> de planta = micorriza.</div>`,
+preguntas:[
+ {t:"mc",q:"Un liquen está formado por…",o:["Un hongo y un alga verde o una cianobacteria","Un hongo y las raíces de una planta","Un alga y un musgo","Dos hongos diferentes"],e:"Hongo + alga verde o cianobacteria. Hongo + raíz es una micorriza."},
+ {t:"match",q:"Relaciona.",p:[["El hongo del liquen aporta…","Humedad y sales minerales"],["El alga del liquen aporta…","Azúcares fabricados en la fotosíntesis"],["Liquen rupícola","Vive sobre las piedras"],["Liquen cortícola","Vive sobre la corteza de los árboles"]]},
+ {t:"mc",q:"La relación entre el hongo y el alga de un liquen es de…",o:["Simbiosis: los dos se benefician","Parasitismo: el hongo se come al alga","Saprofitismo: el hongo descompone al alga","Competencia por la luz"],e:"Los dos ganan: es una simbiosis."},
+ {t:"tf",q:"Los líquenes crecen muy deprisa, por eso cubren rápidamente las rocas.",a:false,e:"Falso. Crecen muy despacio, aunque algunos viven hasta 4000 años."},
+ {t:"mc",q:"¿Por qué apenas se ven líquenes en las ciudades industrializadas?",o:["Porque absorben los contaminantes del agua de lluvia y no tienen estructuras que los protejan","Porque en las ciudades no llega suficiente luz","Porque en las ciudades hace demasiado calor","Porque no hay árboles ni piedras donde crecer"],e:"Absorben lo que lleva el agua de lluvia; si hay contaminación, mueren."},
+ {t:"mc",q:"En una región de Italia, las zonas con menos especies de líquenes coinciden con las zonas donde más personas mueren de cáncer de pulmón. ¿Qué conclusión es más razonable?",o:["Las dos cosas pueden estar relacionadas con la contaminación del aire","Los líquenes provocan el cáncer de pulmón","El cáncer de pulmón hace desaparecer los líquenes","No puede existir ninguna relación entre ambos datos"],e:"La contaminación atmosférica mata a los líquenes y también daña los pulmones."},
+ {t:"tf",q:"Por separado, el hongo y el alga de un liquen podrían vivir igual de bien sobre una roca desnuda.",a:false,e:"Falso. Solo juntos sobreviven en esos entornos tan duros."},
+ {t:"mc",q:"Si en un bosque encuentras muchos líquenes de especies diferentes, puedes deducir que…",o:["El aire está poco contaminado","El suelo es muy fértil","Hay mucha contaminación","Los árboles están enfermos"],e:"Mucha variedad de líquenes indica aire limpio."},
+ {t:"fill",q:"Completa el texto.",x:"Los líquenes son buenos [[indicadores|causantes|filtros]] de la contaminación atmosférica. Viven en lugares extremos y algunos llegan a vivir [[4000|40|400 000]] años."}
+]},
+
+{ id:"plantas", titulo:"Las plantas: órganos y nutrición", ico:"🌱", c:"#3f8a3a", sub:"Grupos, raíz, tallo, hoja y fotosíntesis",
+teoria:`
+<p>Las <b>plantas</b> son <b>eucariotas</b>, <b>pluricelulares</b> y <b>autótrofas fotosintéticas</b>. Se reproducen <b>sexualmente</b>: en su ciclo alternan una etapa que forma <b>esporas</b> y otra que forma <b>gametos</b>. Algunas también se reproducen <b>asexualmente</b> con <b>tubérculos, rizomas, bulbos o estolones</b>.</p>
+<div class="def"><b>Autótrofo</b>: fabrica su propio alimento.</div>
+<h3>Grupos de plantas</h3>
+<div class="cols">
+ <div class="caja"><h4>No vasculares (briofitas)</h4>Sin vasos conductores ni órganos. Se reproducen por esporas. <b>Musgos</b>, hepáticas y antoceros.</div>
+ <div class="caja"><h4>Vasculares sin flores ni semillas (pteridofitas)</h4>Con vasos. Se reproducen por esporas. <b>Helechos</b>, equisetos y licopodios.</div>
+ <div class="caja"><h4>Con flores y semillas (espermafitas)</h4><b>Gimnospermas</b>: sin frutos, flores en «conos».<br><b>Angiospermas</b>: con frutos.</div>
+</div>
+<div class="def"><b>Vasos conductores</b>: tubitos por los que circula la savia.</div>
+<h3>Órganos de las plantas vasculares</h3>
+<div class="cols">
+ <div class="caja"><h4>Raíz</h4><b>Fija</b> la planta al suelo. Su punta está protegida por la <b>pilorriza</b>. Los <b>pelos radicales</b> absorben agua y sales minerales.</div>
+ <div class="caja"><h4>Tallo</h4>Da <b>soporte</b>. Sus vasos llevan la savia:<br>• <b>Savia bruta</b> = agua + sales minerales. Sube de la raíz a las hojas por el <b>xilema</b> (vasos leñosos).<br>• <b>Savia elaborada</b> = azúcares fabricados en las hojas. Va a toda la planta por el <b>floema</b> (vasos liberianos).</div>
+ <div class="caja"><h4>Hoja</h4>Parte plana: <b>limbo</b>; rabillo: <b>peciolo</b>. Cara de arriba: <b>haz</b>; cara de abajo: <b>envés</b>, donde están los <b>estomas</b>.<br>Por los estomas <b>entra CO₂</b> y <b>sale O₂</b>; también sale vapor de agua (<b>transpiración</b>), que <b>baja la temperatura</b>.</div>
+</div>
+<p><b>Hoja caduca</b>: se caen todas en otoño. <b>Hoja perenne</b>: se renuevan poco a poco, el árbol nunca se queda sin hojas.</p>
+<h3>La fotosíntesis</h3>
+<p>Ocurre en los <b>cloroplastos</b> gracias a la <b>clorofila</b>, que capta la <b>energía luminosa</b> del Sol.</p>
+<div class="def">Agua y sales (por la raíz) + CO₂ (por los estomas) + luz ➜ <b>azúcares</b> (glucosa, almidón, sacarosa) + <b>oxígeno</b>.</div>
+<p>Parte de los azúcares se guarda como <b>reserva</b> (almidón, aceites) en semillas, frutos, bulbos, tubérculos y raíces.</p>
+<h3>¿Qué nos aportan las plantas?</h3>
+<p>Son el <b>primer eslabón</b> de las cadenas alimentarias terrestres. Junto con las algas son entre el 99,5 % y el 99,9 % del peso de los seres vivos. Dan <b>alimento</b>, <b>oxígeno</b>, absorben <b>CO₂</b>, regulan el clima, dan <b>fármacos</b> y <b>madera</b>. ¡Los combustibles fósiles se formaron gracias a su fotosíntesis!</p>
+<div class="ojo">Adaptaciones: los <b>tallos subterráneos engrosados</b> (patata, cebolla, lirio) guardan reservas. Los <b>cactus</b> tienen espinas en lugar de hojas para perder menos agua.</div>`,
+preguntas:[
+ {t:"match",q:"Clasifica cada planta en su grupo.",p:[["Musgo","No vascular"],["Hepática","No vascular"],["Helecho","Vascular sin semillas"],["Equiseto","Vascular sin semillas"],["Pino","Gimnosperma"],["Manzano","Angiosperma"]],opts:["No vascular","Vascular sin semillas","Gimnosperma","Angiosperma"]},
+ {t:"mc",q:"La savia bruta está formada por…",o:["Agua y sales minerales, y sube por el xilema hasta las hojas","Azúcares, y viaja por el floema a toda la planta","Agua y azúcares, y baja por el floema hasta la raíz","Oxígeno y CO₂, y circula por los estomas"],e:"Savia bruta = agua + sales; va por el xilema (vasos leñosos) de la raíz a las hojas."},
+ {t:"match",q:"Relaciona cada estructura con su función.",p:[["Xilema (vasos leñosos)","Transporta la savia bruta"],["Floema (vasos liberianos)","Transporta la savia elaborada"],["Pilorriza","Protege la punta de la raíz"],["Pelos radicales","Absorben agua y sales minerales"],["Estomas","Intercambian gases con el exterior"]]},
+ {t:"mc",q:"¿En qué parte de la hoja se encuentran los estomas?",o:["En el envés","En el haz","En el peciolo","En el nervio central"],e:"Los estomas están en el envés, la cara inferior."},
+ {t:"tf",q:"Los árboles de hoja perenne nunca pierden sus hojas.",a:false,e:"Falso. Sí las pierden, pero poco a poco, y forman otras nuevas a la vez: nunca se quedan sin hojas."},
+ {t:"mc",q:"Durante la fotosíntesis, ¿qué entra en la hoja a través de los estomas?",o:["Dióxido de carbono","Agua","Sales minerales","Oxígeno"],e:"Por los estomas entra CO₂ y sale O₂. El agua y las sales entran por la raíz."},
+ {t:"fill",q:"Completa el texto sobre la fotosíntesis.",x:"La fotosíntesis tiene lugar en los [[cloroplastos|estomas|pelos radicales]] gracias a la [[clorofila|quitina|celulosa]], que capta la energía [[luminosa|del suelo|del agua]]. La planta fabrica [[azúcares|sales minerales|esporas]] y libera [[oxígeno|dióxido de carbono|nitrógeno]]."},
+ {t:"mc",q:"La patata, la cebolla y el lirio tienen tallos subterráneos engrosados. ¿Para qué?",o:["Para almacenar sustancias de reserva","Para hacer la fotosíntesis bajo tierra","Para absorber más luz","Para atraer a los insectos polinizadores"],e:"Guardan reservas (almidón) que la planta usa cuando las necesita."},
+ {t:"mc",q:"Los cactus han transformado sus hojas en espinas. ¿Qué consiguen sobre todo?",o:["Perder menos agua por transpiración","Captar más luz solar","Atraer a los polinizadores","Absorber agua de lluvia por las espinas"],e:"Con menos superficie de hoja pierden menos agua; además guardan agua en sus tallos engrosados."},
+ {t:"mc",q:"Una persona consume 60 L de oxígeno por hora. Cada hoja de un árbol produce 5 mL de oxígeno por hora y cada árbol tiene 1000 hojas. ¿Cuántos árboles hacen falta para una persona durante una hora?",o:["12 árboles","120 árboles","300 árboles","1,2 árboles"],e:"Un árbol: 1000 × 5 mL = 5000 mL = 5 L por hora. 60 L ÷ 5 L = 12 árboles."},
+ {t:"mc",q:"¿Para qué utilizan las plantas la transpiración?",o:["Para disminuir su temperatura","Para fabricar azúcares","Para absorber CO₂","Para fijarse al suelo"],e:"Al salir vapor de agua por los estomas, la planta se refresca."},
+ {t:"tf",q:"El carbón, el petróleo y el gas natural se formaron gracias a la fotosíntesis de plantas y algas hace millones de años.",a:true,e:"Verdadero."}
+]},
+
+{ id:"musgos", titulo:"Musgos y helechos", ico:"🌿", c:"#6b8f2e", sub:"Características, ciclos y lupa binocular",
+teoria:`
+<p>Los <b>musgos</b> y los <b>helechos</b> viven en <b>ambientes húmedos</b> y se reproducen por <b>esporas</b>. Los musgos son <b>no vasculares</b>; los helechos son <b>vasculares</b>.</p>
+<h3>Los musgos</h3>
+<p><b>No tienen vasos conductores</b> ni tejidos ni órganos. Tienen falsas hojas (<b>filoides</b>), un eje como tallo (<b>cauloide</b>) y raicillas (<b>rizoides</b>).</p>
+<p>Sirven de alimento y refugio, <b>colonizan rocas desnudas</b> y <b>protegen el suelo de la erosión</b>.</p>
+<p>Viven en lugares <b>húmedos y umbríos</b> porque se deshidratan con facilidad y sus <b>gametos</b> no están protegidos. Sin vasos, el agua pasa <b>de una célula a otra</b>: por eso <b>no pueden crecer mucho</b>.</p>
+${fig("musgo",["Cofia","Cápsula (esporangio)","Filamento","Filoides","Cauloide","Rizoides"])}
+<div class="cols">
+ <div class="caja"><h4>1. Etapa de gametos</h4>La parte verde forma los <b>gametos</b>. La <b>fecundación</b> ocurre cuando el gameto masculino <b>nada en una gota de agua</b> hasta el femenino → se forma el <b>cigoto</b>.</div>
+ <div class="caja"><h4>2. Etapa de esporas</h4>Del cigoto crece un <b>filamento</b> con una <b>cápsula</b> (<b>esporangio</b>) protegida por la <b>cofia</b>. Dentro se forman las <b>esporas</b>, que caen y germinan.</div>
+</div>
+<h3>Los helechos</h3>
+<p>Son <b>vasculares</b>: tienen <b>raíz, tallo y hojas</b> (las hojas se llaman <b>frondes</b>), pero <b>no tienen flores ni semillas</b>. Gracias a los vasos son <b>más grandes</b> que los musgos.</p>
+<div class="cols">
+ <div class="caja"><h4>Reproducción asexual</h4>Por el <b>rizoma</b>, un tallo subterráneo horizontal del que brotan nuevos tallos.</div>
+ <div class="caja"><h4>Reproducción sexual</h4>1) En el <b>envés de los frondes</b> hay <b>esporangios</b> con esporas.<br>2) Las esporas germinan en suelo húmedo y forman el <b>prótalo</b> (plantita microscópica) con los gametos.<br>3) Con el suelo encharcado, el gameto masculino <b>nada</b> y fecunda al femenino → <b>cigoto</b> → nuevo helecho.</div>
+</div>
+<div class="ojo">Hace millones de años hubo bosques de helechos gigantes, pero nunca de musgos gigantes: sin vasos conductores no pueden crecer en altura.</div>
+<h3>La lupa binocular</h3>
+<p>Tiene <b>menos aumentos</b> que el microscopio, pero da <b>sensación de relieve</b> y un <b>gran campo de visión</b>. Pasos: 1) muestra sobre la <b>placa de contraste</b>, sujeta con las <b>pinzas</b>; 2) con el <b>mando de bloqueo</b>, bajar hasta que el objetivo quede a unos <b>5 cm</b>; 3) mirar con los dos ojos y usar el <b>mando de enfoque</b>.</p>`,
+preguntas:[
+ {t:"mc",q:"¿Por qué los musgos y los helechos tienen que vivir en zonas húmedas?",o:["Porque el gameto masculino necesita agua para nadar hasta el femenino","Porque hacen la fotosíntesis bajo el agua","Porque sus raíces son demasiado cortas","Porque el sol destruye sus esporas"],e:"Para que haya fecundación, el gameto masculino tiene que nadar en agua. Además los musgos se deshidratan con facilidad."},
+ {t:"match",q:"¿Musgo, helecho o los dos?",p:[["Tiene vasos conductores","Helecho"],["Tiene filoides, cauloide y rizoides","Musgo"],["Se reproduce por esporas","Los dos"],["Sus hojas se llaman frondes","Helecho"],["Forma un prótalo","Helecho"],["Su cápsula está protegida por una cofia","Musgo"],["Necesita agua para la fecundación","Los dos"]],opts:["Musgo","Helecho","Los dos"]},
+ {t:"label",q:"Escribe el nombre de cada parte del musgo.",svg:"musgo",p:[["1","Cofia"],["2","Cápsula (esporangio)"],["3","Filamento"],["4","Filoides"],["5","Cauloide"],["6","Rizoides"]]},
+ {t:"mc",q:"Hace millones de años hubo bosques de helechos gigantes. ¿Por qué nunca hubo bosques de musgos gigantes?",o:["Porque no tienen vasos y el agua pasa de célula en célula","Porque los musgos no hacen la fotosíntesis","Porque no tienen semillas","Porque solo viven en agua salada"],e:"Sin vasos conductores el agua no llega lejos, así que no pueden crecer en altura."},
+ {t:"order",q:"Ordena el ciclo de reproducción sexual de un helecho.",p:["En el envés de los frondes, los esporangios liberan esporas","Las esporas germinan en el suelo húmedo y forman el prótalo","En el prótalo se forman los gametos","El gameto masculino nada y fecunda al femenino: se forma el cigoto","Del cigoto se desarrolla un nuevo helecho"]},
+ {t:"mc",q:"¿Dónde están los esporangios de un helecho?",o:["En el envés de los frondes","En la punta de la raíz","En el haz de los frondes","Dentro del rizoma"],e:"Se ven como puntitos marrones en el envés de los frondes."},
+ {t:"mc",q:"El rizoma de un helecho es…",o:["Un tallo subterráneo horizontal del que brotan nuevos tallos","La raíz principal del helecho","La plantita microscópica que forma gametos","La cápsula donde se forman las esporas"],e:"El rizoma sirve para la reproducción asexual. La plantita con gametos es el prótalo."},
+ {t:"tf",q:"Los musgos protegen el suelo de la erosión y pueden colonizar rocas desnudas.",a:true,e:"Verdadero."},
+ {t:"mc",q:"¿Qué ventaja tiene la lupa binocular frente al microscopio?",o:["Da sensación de relieve y un gran campo de visión, aunque aumenta menos","Tiene muchos más aumentos","Permite ver el interior de las células","No necesita enfocar"],e:"Aumenta menos, pero se ve el objeto en relieve y entero."},
+ {t:"order",q:"Ordena los pasos para observar con la lupa binocular.",p:["Colocar la muestra sobre la placa de contraste y sujetarla con las pinzas","Con el mando de bloqueo, bajar la lupa hasta que el objetivo esté a unos 5 cm","Mirar con los dos ojos y usar el mando de enfoque"]},
+ {t:"fill",q:"Completa el ciclo del musgo.",x:"Tras la fecundación se forma el [[cigoto|prótalo|rizoma]]. De él crece un [[filamento|rizoide|fronde]] con una [[cápsula|flor|piña]] protegida por la cofia, donde se forman las [[esporas|semillas|flores]]."}
+]},
+
+{ id:"gimno", titulo:"Las gimnospermas", ico:"🌲", c:"#2d6a4f", sub:"Conos, piñas, ciclo del pino",
+teoria:`
+<p>Las plantas con semillas se llaman <b>espermafitas</b>: son las <b>gimnospermas</b> y las <b>angiospermas</b>. Las <b>semillas se dispersan más fácilmente que las esporas</b> y permiten colonizar terrenos más <b>áridos</b>.</p>
+<p>Las <b>gimnospermas</b> son plantas <b>vasculares</b> con tejidos y órganos. Sus órganos reproductores son los <b>conos</b>.</p>
+<div class="cols">
+ <div class="caja"><h4>Conos masculinos</h4>Escamas <b>blandas</b> donde se producen los <b>granos de polen</b>, que contienen los <b>gametos masculinos</b>.</div>
+ <div class="caja"><h4>Conos femeninos (piñas)</h4>Escamas <b>leñosas</b>. <b>No tienen ovario</b>: los <b>óvulos</b> están al descubierto y contienen los gametos femeninos. Por eso forman <b>semillas pero no frutos</b>.</div>
+</div>
+<div class="def"><b>Gimnosperma</b> quiere decir «semilla desnuda»: la semilla no está dentro de un fruto.</div>
+<p>Sus hojas tienen forma de <b>aguja</b> o de <b>escama</b> y están cubiertas de <b>resina</b>, que las protege del <b>frío</b> y la <b>sequía</b>. La mayoría son de <b>hoja perenne</b>.</p>
+<p>Ejemplos: <b>pinos</b>, abetos, <b>tejos</b>, píceas, cedros, <b>enebros</b>, <b>cipreses</b>, cicas y <b>ginkgos</b>. El <i>Ginkgo biloba</i> es un <b>«fósil viviente»</b>: no tiene parientes vivos.</p>
+<h3>Ciclo de un pino</h3>
+<p>1) El <b>viento</b> lleva el polen del cono masculino al femenino. 2) Se produce la <b>fecundación</b>. 3) El cono femenino se transforma en <b>piña</b>, con las semillas (<b>piñones</b>) dentro. 4) Los piñones tienen nutrientes y <b>«alas»</b> para que el viento los disperse. 5) Germinan y forman un nuevo pino.</p>
+<div class="ojo">El piñón es una <b>semilla</b>, no un fruto. Las gimnospermas no tienen frutos.</div>`,
+preguntas:[
+ {t:"mc",q:"¿Por qué las gimnospermas forman semillas pero no frutos?",o:["Porque sus conos femeninos no tienen ovario y los óvulos están al descubierto","Porque no tienen gametos femeninos","Porque se reproducen por esporas","Porque no tienen conos masculinos"],e:"El fruto se forma a partir del ovario; sin ovario, no hay fruto."},
+ {t:"mc",q:"Los granos de polen de un pino se producen en…",o:["Los conos masculinos","Las piñas","Las hojas en forma de aguja","Los piñones"],e:"Los conos masculinos, de escamas blandas, producen el polen."},
+ {t:"order",q:"Ordena el ciclo de un pino.",p:["El viento transporta el polen del cono masculino al femenino","Se produce la fecundación","El cono femenino se transforma en una piña con piñones","El viento dispersa los piñones gracias a sus «alas»","El piñón germina y forma un nuevo pino"]},
+ {t:"mc",q:"Las hojas del pino tienen forma de aguja y están cubiertas de resina. ¿Qué consiguen?",o:["Protegerse del frío y de la sequía","Captar más luz para la fotosíntesis","Atraer a los insectos","Flotar en el agua"],e:"Es una adaptación a climas fríos y secos y a suelos pobres."},
+ {t:"tf",q:"El piñón es el fruto del pino.",a:false,e:"Falso. El piñón es la semilla; las gimnospermas no tienen frutos."},
+ {t:"match",q:"¿Gimnosperma o angiosperma?",p:[["Pino","Gimnosperma"],["Ciprés","Gimnosperma"],["Tejo","Gimnosperma"],["Encina","Angiosperma"],["Olivo","Angiosperma"],["Maíz","Angiosperma"]],opts:["Gimnosperma","Angiosperma"]},
+ {t:"mc",q:"¿Cómo se dispersan los piñones?",o:["Con el viento, gracias a sus «alas»","Flotando en el agua","Pegados al pelo de los animales con ganchos","Lanzados por la planta como una catapulta"],e:"Los piñones tienen «alas» para que los lleve el viento."},
+ {t:"mc",q:"Al Ginkgo biloba se le llama «fósil viviente» porque…",o:["Su especie es la única de su grupo que sigue viva, sin parientes","Está hecho de piedra","Ya se ha extinguido","Puede vivir 4000 años"],e:"No tiene parientes vivos: es la única especie de su grupo."},
+ {t:"mc",q:"¿Qué ventaja tuvo la aparición de las semillas frente a las esporas?",o:["Se dispersan más fácilmente y permiten colonizar terrenos más áridos","Permiten reproducirse sin gametos","Hacen que la planta no necesite luz","Sirven para hacer la fotosíntesis"],e:"Las semillas permitieron a las plantas conquistar terrenos más secos."},
+ {t:"fill",q:"Completa el texto.",x:"Los conos [[femeninos|masculinos]] también se llaman piñas y tienen escamas [[leñosas|blandas]]. La mayoría de las gimnospermas son de hoja [[perenne|caduca]]."}
+]},
+
+{ id:"flor", titulo:"Angiospermas: la flor y la polinización", ico:"🌸", c:"#b8467a", sub:"Partes de la flor, clases, polinización y fecundación",
+teoria:`
+<p>Las <b>angiospermas</b> son plantas <b>vasculares</b> con <b>flores, frutos y semillas</b>. Pueden ser hierbas, arbustos o árboles; son la mayoría de los cultivos y de los árboles.</p>
+<div class="cols">
+ <div class="caja"><h4>Monocotiledóneas</h4>Semillas con <b>un cotiledón</b>. Ej.: maíz, trigo, palmera.</div>
+ <div class="caja"><h4>Dicotiledóneas</h4>Semillas con <b>dos cotiledones</b>. Ej.: tomate, legumbres, rosales, robles, abedules, frutales.</div>
+</div>
+<p>Su reproducción sexual tiene varias etapas: <b>polinización → fecundación → formación de semilla y fruto → dispersión → germinación</b>.</p>
+<h3>¿Cómo es una flor?</h3>
+<p>Es el <b>órgano reproductor</b>. Tiene cuatro capas de hojas modificadas en círculos:</p>
+${fig("flor",["Estigma","Estilo","Ovario","Óvulo","Antera","Filamento","Pétalo","Sépalo"])}
+<div class="cols">
+ <div class="caja"><h4>Cáliz</h4>Formado por los <b>sépalos</b>, verdes, que <b>protegen</b> la flor.</div>
+ <div class="caja"><h4>Corola</h4>Formada por los <b>pétalos</b>, de colores vivos para <b>atraer a los insectos</b>.</div>
+ <div class="caja"><h4>Estambres ♂</h4>Órganos <b>masculinos</b>: un <b>filamento</b> y una <b>antera</b>, donde se forman los <b>granos de polen</b>.</div>
+ <div class="caja"><h4>Carpelo ♀</h4>Órgano <b>femenino</b> (se llama <b>pistilo</b> si tiene forma de maza): <b>estigma</b> (pegajoso, atrapa el polen), <b>estilo</b> (une estigma y ovario) y <b>ovario</b> (con los <b>óvulos</b>).</div>
+</div>
+<h3>Clases de flores</h3>
+<p><b>Completas</b>: tienen las cuatro envolturas. <b>Incompletas</b>: les falta alguna. <b>Hermafroditas</b>: estambres y carpelos. <b>Unisexuales</b>: solo carpelos (femeninas ♀) o solo estambres (masculinas ♂), como el <b>maíz</b>.</p>
+<p><b>Inflorescencias</b>: flores agrupadas en un eje: <b>espiga</b>, <b>amento</b>, <b>umbela</b> y <b>capítulo</b> (girasol).</p>
+<h3>La polinización</h3>
+<div class="def"><b>Polinización</b>: transporte de los granos de polen desde las <b>anteras</b> hasta el <b>estigma</b> de la misma flor o de otra.</div>
+<div class="cols">
+ <div class="caja"><h4>Anemógama 🌬️</h4>Por el <b>viento</b>. La planta produce <b>muchísimo polen</b> (gran gasto de energía). Flores <b>sin pétalos de colores</b>. Ej.: gramíneas, abedules.</div>
+ <div class="caja"><h4>Entomógama 🦋</h4>Por <b>insectos</b> (abejas, mariposas, escarabajos, moscas). Flores con <b>pétalos de colores</b>, <b>fragancias</b> y <b>néctar</b>.</div>
+</div>
+<h3>La fecundación: el tubo polínico</h3>
+<p>El grano de polen cae en el estigma y forma el <b>tubo polínico</b>, que crece por el estilo hasta el <b>óvulo</b>. Por él viajan los gametos masculinos, así que <b>no necesitan nadar</b>: estas plantas son <b>independientes del agua</b> para reproducirse. El <b>cigoto</b> se convierte en el <b>embrión</b> de la semilla.</p>
+<div class="ojo"><b>Polinización</b> = llevar el polen al estigma. <b>Fecundación</b> = unión del gameto masculino y el femenino. ¡No son lo mismo!</div>`,
+preguntas:[
+ {t:"label",q:"Escribe el nombre de cada parte de la flor.",svg:"flor",p:[["1","Estigma"],["2","Estilo"],["3","Ovario"],["4","Óvulo"],["5","Antera"],["6","Filamento"],["7","Pétalo"],["8","Sépalo"]]},
+ {t:"match",q:"Relaciona cada parte de la flor con su función.",p:[["Sépalos","Protegen la flor"],["Pétalos","Atraen a los insectos"],["Antera","Produce los granos de polen"],["Estigma","Atrapa el polen con su superficie pegajosa"],["Estilo","Comunica el estigma con el ovario"],["Ovario","Contiene los óvulos"]]},
+ {t:"mc",q:"¿Qué es el pistilo?",o:["Un carpelo con forma de maza","El conjunto de los estambres","El conjunto de los pétalos","El rabillo que une la flor al tallo"],e:"El carpelo (órgano femenino) se llama pistilo cuando tiene forma de maza."},
+ {t:"mc",q:"Una flor tiene estambres pero no tiene carpelos. Es una flor…",o:["Unisexual masculina","Hermafrodita","Unisexual femenina","Completa"],e:"Solo tiene órganos masculinos: unisexual masculina."},
+ {t:"mc",q:"El maíz tiene flores masculinas y femeninas separadas. ¿Qué flor da lugar a la mazorca?",o:["La femenina","La masculina","Las dos a la vez","Ninguna: la mazorca es un tallo"],e:"La mazorca son frutos, y los frutos se forman a partir del ovario, que está en la flor femenina."},
+ {t:"match",q:"¿Polinización anemógama o entomógama?",p:[["Abedul","Anemógama"],["Trigo y otras gramíneas","Anemógama"],["Produce enormes cantidades de polen","Anemógama"],["Flores con néctar y fragancia","Entomógama"],["Pétalos de colores vivos","Entomógama"],["Rafflesia, con olor a carne podrida","Entomógama"]],opts:["Anemógama","Entomógama"]},
+ {t:"mc",q:"La flor de Rafflesia desprende un olor pútrido. ¿Con qué fin?",o:["Atraer a las moscas que transportarán su polen","Ahuyentar a los animales que se la quieren comer","Descomponer la materia orgánica cercana","Atraer a las abejas que buscan néctar"],e:"Las moscas acuden al olor a podrido y así transportan el polen."},
+ {t:"mc",q:"¿Qué ventaja tiene el tubo polínico?",o:["Los gametos masculinos no necesitan nadar: la planta no depende del agua para la fecundación","Permite que el viento transporte el polen","Hace que la flor tenga colores más vivos","Sirve para que la semilla germine"],e:"Gracias al tubo polínico las plantas con semillas se independizaron del agua."},
+ {t:"tf",q:"La polinización es la unión del gameto masculino con el femenino.",a:false,e:"Falso. Eso es la fecundación. La polinización es el transporte del polen hasta el estigma."},
+ {t:"mc",q:"El girasol es una inflorescencia de tipo…",o:["Capítulo","Espiga","Umbela","Amento"],e:"El girasol es un capítulo: muchas florecillas juntas en un disco."},
+ {t:"match",q:"¿Monocotiledónea o dicotiledónea?",p:[["Maíz","Monocotiledónea"],["Trigo","Monocotiledónea"],["Palmera","Monocotiledónea"],["Tomate","Dicotiledónea"],["Roble","Dicotiledónea"],["Judía","Dicotiledónea"]],opts:["Monocotiledónea","Dicotiledónea"]},
+ {t:"fill",q:"Completa el texto.",x:"La [[polinización|fecundación|germinación]] es el transporte del polen desde las [[anteras|estigmas|sépalos]] hasta el [[estigma|filamento|pétalo]]. Las plantas que polinizan con el viento suelen carecer de [[pétalos coloreados|estambres|polen]]."}
+]},
+
+{ id:"fruto", titulo:"Fruto, semilla y dispersión", ico:"🍒", c:"#a0522d", sub:"Partes del fruto, dispersión y germinación",
+teoria:`
+<p>Después de la fecundación: el <b>óvulo</b> se convierte en <b>semilla</b> y el <b>ovario</b> se convierte en <b>fruto</b>.</p>
+<h3>Partes de un fruto carnoso (cereza)</h3>
+${fig("cereza",["Exocarpo (piel)","Mesocarpo (carne)","Endocarpo (hueso)","Semilla"])}
+<div class="cols">
+ <div class="caja"><h4>Exocarpo</h4>La <b>piel</b>.</div>
+ <div class="caja"><h4>Mesocarpo</h4>La parte <b>carnosa</b> que nos comemos.</div>
+ <div class="caja"><h4>Endocarpo</h4>El <b>hueso</b> duro que protege la semilla.</div>
+</div>
+<h3>Dispersión de frutos y semillas</h3>
+<p>Sirve para <b>evitar la competencia</b> por los nutrientes y la luz y para <b>colonizar nuevos territorios</b>.</p>
+<div class="cols">
+ <div class="caja"><h4>Frutos secos</h4>Paredes secas, con adaptaciones para el viento, el agua o el pelo de animales. Ej.: <b>cápsula</b> (amapola), <b>glande</b> (bellota).</div>
+ <div class="caja"><h4>Frutos carnosos</h4>Llenos de nutrientes azucarados: los animales los comen y dispersan las semillas lejos. Ej.: <b>baya</b> (tomate), <b>agregado</b> (frambuesa), <b>múltiple</b> (higo).</div>
+</div>
+<div class="cols">
+ <div class="caja"><h4>Catapultadas</h4>Lanzan las semillas: <b>algarroba</b>.</div>
+ <div class="caja"><h4>Pelo de animales</h4>Ganchos para engancharse: <b>bardana</b>.</div>
+ <div class="caja"><h4>Agua</h4>Estructuras para flotar: <b>coco</b>.</div>
+ <div class="caja"><h4>Viento</h4>«Alas» o «paracaídas»: <b>diente de león</b>.</div>
+ <div class="caja"><h4>Intestino de animales</h4>Salen con los excrementos, que sirven de abono: <b>pimiento</b>.</div>
+</div>
+<h3>La semilla</h3>
+<ul>
+ <li><b>Cubierta protectora</b>: la protege de parásitos, de la deshidratación y del clima.</li>
+ <li><b>Reserva de nutrientes</b>: en hojas modificadas llamadas <b>cotiledones</b>.</li>
+ <li><b>Embrión</b>: una planta en miniatura «dormida». Tiene <b>radícula</b> (futura raíz) y <b>plúmula</b> (tallo corto y dos hojitas).</li>
+</ul>
+${fig("semilla",["Cubierta protectora","Cotiledón","Plúmula","Radícula"])}
+<h3>Germinación (judía)</h3>
+<p>Con <b>temperatura y humedad adecuadas</b>, la semilla se <b>hincha</b> y el embrión empieza a crecer usando las <b>reservas de los cotiledones</b>; sale de la tierra. Cuando se acaban las reservas, la plantita ya tiene <b>raíz y hojas</b> propias.</p>
+<div class="cols">
+ <div class="caja"><h4>Monocotiledóneas</h4>1 cotiledón · hojas alargadas con <b>nervios paralelos</b> · vasos repartidos por el tallo · flores con simetría bilateral · <b>raíz fasciculada</b>.</div>
+ <div class="caja"><h4>Dicotiledóneas</h4>2 cotiledones · hojas con <b>nervios en red</b> · vasos en <b>anillos concéntricos</b> · flores con simetría radial · <b>raíz pivotante</b>.</div>
+</div>
+<div class="ojo">El <b>tubérculo</b> de la patata NO es su fruto: es un tallo subterráneo. Su fruto es la bolita que se forma tras la flor.</div>`,
+preguntas:[
+ {t:"mc",q:"Después de la fecundación…",o:["El óvulo se convierte en semilla y el ovario en fruto","El ovario se convierte en semilla y el óvulo en fruto","El estigma se convierte en fruto","Los pétalos se convierten en semillas"],e:"Óvulo → semilla. Ovario → fruto."},
+ {t:"label",q:"Escribe el nombre de cada parte de la cereza.",svg:"cereza",p:[["1","Exocarpo"],["2","Mesocarpo"],["3","Endocarpo"],["4","Semilla"]]},
+ {t:"match",q:"¿Cómo se dispersa cada una?",p:[["Algarroba","Catapulta"],["Bardana","Pelo de animales"],["Coco","Agua"],["Diente de león","Viento"],["Pimiento","Intestino de animales"],["Piñón del pino","Viento"]],opts:["Catapulta","Pelo de animales","Agua","Viento","Intestino de animales"]},
+ {t:"mc",q:"¿Qué ocurriría si todas las semillas de una planta cayeran junto a ella?",o:["Competirían entre ellas y con la planta madre por los nutrientes y la luz, y no colonizarían nuevos lugares","Crecerían más deprisa por estar juntas","No pasaría nada: así se protegen mejor","Se convertirían en frutos"],e:"La dispersión evita la competencia y permite colonizar nuevos territorios."},
+ {t:"label",q:"Escribe el nombre de cada parte de la semilla de judía.",svg:"semilla",p:[["1","Cubierta protectora"],["2","Cotiledón"],["3","Plúmula"],["4","Radícula"]]},
+ {t:"match",q:"Relaciona cada parte de la semilla con su descripción.",p:[["Radícula","Esbozo de la raíz"],["Plúmula","Tallo corto con dos hojitas"],["Cotiledones","Reserva de nutrientes"],["Cubierta protectora","Protege de parásitos y de la deshidratación"]]},
+ {t:"order",q:"Ordena la germinación de una judía.",p:["Con temperatura y humedad adecuadas, la semilla se hincha","El embrión comienza a desarrollarse usando las reservas de los cotiledones","La plantita emerge de la tierra","Se acaban las reservas y la planta ya tiene raíz y hojas propias"]},
+ {t:"match",q:"¿Característica de monocotiledónea o de dicotiledónea?",p:[["Un solo cotiledón","Monocotiledónea"],["Hojas con nervios paralelos","Monocotiledónea"],["Raíz fasciculada","Monocotiledónea"],["Hojas con nervios en red","Dicotiledónea"],["Raíz pivotante","Dicotiledónea"],["Vasos del tallo en anillos concéntricos","Dicotiledónea"]],opts:["Monocotiledónea","Dicotiledónea"]},
+ {t:"mc",q:"El higo es un fruto…",o:["Múltiple","Agregado","Baya","Seco"],e:"El higo es múltiple; la frambuesa es agregado; el tomate, una baya."},
+ {t:"mc",q:"En la planta de la patata, ¿qué es el fruto?",o:["La pequeña bolita que se forma después de la flor","El tubérculo que crece bajo tierra","La raíz principal","La flor"],e:"El tubérculo es un tallo subterráneo que guarda reservas; el fruto procede del ovario de la flor."},
+ {t:"tf",q:"La bellota es un fruto carnoso.",a:false,e:"Falso. Es un fruto seco de tipo glande."},
+ {t:"mc",q:"¿Por qué muchos frutos carnosos son dulces y de colores llamativos?",o:["Para que los animales se los coman y dispersen las semillas lejos","Para protegerse de los parásitos","Para hacer la fotosíntesis","Para flotar en el agua"],e:"Los animales comen el fruto y expulsan las semillas lejos con los excrementos."}
+]},
+
+{ id:"flora", titulo:"La flora de nuestro entorno", ico:"🗺️", c:"#7a8f3a", sub:"Plantas típicas de las comunidades autónomas",
+teoria:`
+<p>La <b>situación geográfica</b> de España y sus <b>climas variados</b> hacen que haya una <b>gran diversidad</b> de ambientes y una flora silvestre muy rica.</p>
+<h3>Comunidad de Madrid</h3>
+<div class="cols">
+ <div class="caja"><h4>Árboles</h4><b>Encina</b>, <b>roble melojo</b>, <b>pino</b> (silvestre, resinero y piñonero), tejo, fresno, serbal, abedul, haya, olmo y álamo.</div>
+ <div class="caja"><h4>Arbustos</h4><b>Madroño</b>, acebo, sabina, enebro, piorno, <b>jara</b>, <b>romero</b>, cantueso y retama.</div>
+</div>
+<h3>Plantas que identifican otras zonas</h3>
+<div class="cols">
+ <div class="caja"><h4>Canarias</h4><b>Drago</b>, pino canario, palmera canaria.</div>
+ <div class="caja"><h4>Andalucía</h4><b>Olivo</b>, pinsapo, encina, alcornoque.</div>
+ <div class="caja"><h4>Región de Murcia</h4><b>Chumbera</b>, palmera, algarrobo.</div>
+ <div class="caja"><h4>Galicia</h4><b>Roble carballo</b>, castaño, eucalipto.</div>
+ <div class="caja"><h4>Cataluña</h4>Abeto, haya, <b>acebo</b>.</div>
+ <div class="caja"><h4>Ceuta y Melilla</h4><b>Alcornoque</b>, palmera datilera.</div>
+</div>`,
+preguntas:[
+ {t:"mc",q:"¿Qué árbol es característico de las Islas Canarias?",o:["El drago","El roble carballo","La chumbera","El pinsapo"],e:"El drago es el árbol más típico de Canarias."},
+ {t:"mc",q:"¿Qué grupo de árboles es propio de la Comunidad de Madrid?",o:["Encina, roble melojo y pino","Drago, pino canario y palmera canaria","Chumbera, palmera y algarrobo","Eucalipto, castaño y roble carballo"],e:"En Madrid abundan la encina, el roble melojo y varios pinos."},
+ {t:"mc",q:"Arbusto de Madrid de frutos rojos comestibles que aparece en el escudo de la ciudad de Madrid:",o:["Madroño","Retama","Jara","Romero"],e:"El madroño."},
+ {t:"match",q:"Relaciona cada planta con la comunidad donde es típica.",p:[["Drago","Canarias"],["Chumbera","Región de Murcia"],["Olivo","Andalucía"],["Roble carballo","Galicia"],["Rama de madroño","Comunidad de Madrid"]],opts:["Canarias","Región de Murcia","Andalucía","Galicia","Comunidad de Madrid"]},
+ {t:"tf",q:"La variedad de climas de España explica que tenga una flora muy diversa.",a:true,e:"Verdadero."}
+]}
+];
+
+/* ================== ESTADO ================== */
+const CLAVE="hap1eso_v1";
+let S = {nombre:"", mejores:{}, simulacro:null};
+try{ const g=localStorage.getItem(CLAVE); if(g) S=Object.assign(S,JSON.parse(g)); }catch(e){}
+function guardar(){ try{ localStorage.setItem(CLAVE,JSON.stringify(S)); }catch(e){} }
+
+let Q = null; // sesión de preguntas activa
+
+const $app = document.getElementById("app");
+const barajar = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+const TIPOS={mc:"Elige la respuesta",tf:"Verdadero o falso",match:"Relaciona",label:"Pon nombre",order:"Ordena",fill:"Completa"};
+
+function cabecera(v){ document.getElementById("cab").style.display=v?"flex":"none"; document.getElementById("nomCab").textContent=S.nombre?("👤 "+S.nombre):""; }
+function arriba(){ window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* ================== PANTALLAS ================== */
+function irInicio(){
+  cabecera(false);
+  $app.innerHTML = `
+  <div class="tarjeta portada">
+    <div class="iconos">🍄🌊🌿🌲🌸</div>
+    <h2>Hongos, algas y plantas</h2>
+    <p>Repaso para el examen · Biología y Geología 1º ESO</p>
+    <form onsubmit="event.preventDefault();entrar()">
+      <input type="text" id="nombre" placeholder="Escribe tu nombre y apellido" value="${esc(S.nombre)}" autocomplete="off">
+      <div class="fila" style="justify-content:center"><button class="btn btn-pri" type="submit">Empezar 🌱</button></div>
+    </form>
+  </div>`;
+  setTimeout(()=>{const i=document.getElementById("nombre"); if(i) i.focus();},50);
+}
+function entrar(){
+  const n=document.getElementById("nombre").value.trim();
+  if(!n){ document.getElementById("nombre").style.borderColor="#c0392b"; return; }
+  if(n!==S.nombre){ S={nombre:n,mejores:{},simulacro:null}; }
+  guardar(); irMenu();
+}
+
+function irMenu(){
+  cabecera(true);
+  const total=BLOQUES.reduce((s,b)=>s+(S.mejores[b.id]||0),0)/BLOQUES.length;
+  $app.innerHTML = `
+  <div class="tarjeta">
+    <h2>¡Hola, ${esc(S.nombre.split(" ")[0])}! 👋</h2>
+    <p>Elige un bloque. En cada uno primero lees la teoría y luego practicas. Cuando los domines, haz el <b>simulacro de examen</b>.</p>
+    <div class="barra" style="--c:var(--hoja);height:12px"><span style="width:${Math.round(total)}%"></span></div>
+    <div class="mejor">Progreso global: ${Math.round(total)} %</div>
+  </div>
+  <div class="rejilla">
+    ${BLOQUES.map((b,i)=>{const m=S.mejores[b.id]; return `
+      <button class="bloque" style="--c:${b.c}" onclick="irTeoria(${i})">
+        <div class="ico">${b.ico}</div>
+        <div class="tit">${i+1}. ${b.titulo}</div>
+        <div class="sub">${b.sub}</div>
+        <div class="barra"><span style="width:${m||0}%"></span></div>
+        <div class="mejor">${m!=null?("Mejor resultado: "+m+" %"):"Sin empezar"}</div>
+      </button>`}).join("")}
+    <button class="bloque simulacro" style="--c:var(--flor)" onclick="empezarSimulacro()">
+      <div class="ico">📝</div>
+      <div class="tit">Simulacro de examen</div>
+      <div class="sub">25 preguntas mezcladas de todos los bloques, con nota sobre 10</div>
+      <div class="mejor">${S.simulacro!=null?("Mejor nota: "+S.simulacro.toFixed(1)):"Sin hacer"}</div>
+    </button>
+  </div>
+  <div class="fila" style="justify-content:center"><button class="btn btn-sec" onclick="descargarInforme()">📄 Descargar mi informe</button></div>`;
+  arriba();
+}
+
+function irTeoria(i){
+  const b=BLOQUES[i];
+  $app.innerHTML = `
+  <div class="tarjeta teoria" style="border-top:8px solid ${b.c}">
+    <h2>${b.ico} ${b.titulo}</h2>
+    ${b.teoria}
+    <div class="fila">
+      <button class="btn btn-pri" onclick="empezarBloque(${i})">¡A practicar! ✏️</button>
+      <button class="btn btn-sec" onclick="irMenu()">← Volver</button>
+    </div>
+  </div>`;
+  arriba();
+}
+
+/* ================== SESIONES ================== */
+function prepararPregunta(p){
+  const c={...p};
+  if(p.t==="mc"){ c.orden=barajar(p.o.map((_,k)=>k)); }
+  if(p.t==="match"||p.t==="label"){ c.opciones=p.opts?[...p.opts]:barajar(p.p.map(x=>x[1])); if(p.t==="label") c.opciones=barajar(p.p.map(x=>x[1])); c.filas=p.t==="label"?p.p:barajar(p.p); }
+  if(p.t==="order"){ c.pool=barajar(p.p.map((_,k)=>k)); while(p.p.length>1&&c.pool.every((v,k)=>v===k)) c.pool=barajar(c.pool); c.sel=[]; }
+  if(p.t==="fill"){ c.huecos=[]; c.trozos=p.x.split(/\[\[|\]\]/).map((tr,k)=>{ if(k%2){ const ops=tr.split("|"); c.huecos.push(ops[0]); return {ops:barajar(ops)}; } return tr; }); }
+  return c;
+}
+function empezarBloque(i){
+  const b=BLOQUES[i];
+  Q={modo:"bloque",bi:i,lista:b.preguntas.map(prepararPregunta),idx:0,puntos:[],hecho:false};
+  pintarPregunta();
+}
+function empezarSimulacro(){
+  let todas=[];
+  BLOQUES.forEach((b,bi)=>b.preguntas.forEach(p=>todas.push({...p,_b:bi})));
+  // al menos 2 por bloque y el resto al azar
+  let elegidas=[];
+  BLOQUES.forEach((b,bi)=>{ elegidas.push(...barajar(todas.filter(p=>p._b===bi)).slice(0,2)); });
+  const resto=barajar(todas.filter(p=>!elegidas.includes(p)));
+  elegidas=barajar(elegidas.concat(resto.slice(0,25-elegidas.length)));
+  Q={modo:"sim",lista:elegidas.map(prepararPregunta),idx:0,puntos:[],hecho:false};
+  pintarPregunta();
+}
+
+/* ================== PINTAR PREGUNTA ================== */
+function pintarPregunta(){
+  const p=Q.lista[Q.idx], n=Q.lista.length;
+  const titulo = Q.modo==="sim" ? "📝 Simulacro de examen" : Q.modo==="fallos" ? "🎯 Repaso de fallos" : (BLOQUES[Q.bi].ico+" "+BLOQUES[Q.bi].titulo);
+  let cuerpo="";
+  if(p.t==="mc"){
+    cuerpo=`<div class="opciones">${p.orden.map(k=>`<button class="opc" data-k="${k}" onclick="responderMC(${k})">${esc(p.o[k])}</button>`).join("")}</div>`;
+  } else if(p.t==="tf"){
+    cuerpo=`<div class="vf"><button class="opc" data-v="1" onclick="responderTF(true)">✔️ Verdadero</button><button class="opc" data-v="0" onclick="responderTF(false)">✖️ Falso</button></div>`;
+  } else if(p.t==="match"||p.t==="label"){
+    cuerpo=(p.t==="label"?`<div class="dibujo">${SVG[p.svg]}</div>`:"")+
+    `<div class="parejas">${p.filas.map((f,k)=>`
+      <div class="pareja" id="pr${k}"><div class="izq">${p.t==="label"?("Número "+f[0]):esc(f[0])}</div>
+      <select id="s${k}" onchange="revisarListo()"><option value="">— Elige —</option>${p.opciones.filter((v,ii,a)=>a.indexOf(v)===ii).map(o=>`<option>${esc(o)}</option>`).join("")}</select></div>`).join("")}</div>
+    <div class="fila"><button class="btn btn-pri" id="btnComp" onclick="comprobarMatch()" disabled>Comprobar</button></div>`;
+  } else if(p.t==="order"){
+    cuerpo=`<div id="ordenZona"></div><div class="fila"><button class="btn btn-sec" onclick="borrarOrden()">↺ Empezar de nuevo</button><button class="btn btn-pri" id="btnComp" onclick="comprobarOrden()" disabled>Comprobar</button></div>`;
+  } else if(p.t==="fill"){
+    let h=0;
+    cuerpo=`<div class="huecos">${p.trozos.map(tr=>typeof tr==="string"?esc(tr):`<select id="h${h++}" onchange="revisarListoFill()"><option value="">……</option>${tr.ops.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`).join("")}</div>
+    <div class="fila"><button class="btn btn-pri" id="btnComp" onclick="comprobarFill()" disabled>Comprobar</button></div>`;
+  }
+  $app.innerHTML=`
+  <div class="tarjeta">
+    <div class="cabeza-quiz">
+      <div class="contador">${titulo}</div>
+      <div class="contador">${Q.idx+1} / ${n}</div>
+    </div>
+    <div class="progreso"><span style="width:${(Q.idx)/n*100}%"></span></div>
+    <div style="margin-top:16px"><span class="tipo">${TIPOS[p.t]}</span></div>
+    <div class="enunciado">${esc(p.q)}</div>
+    ${cuerpo}
+    <div id="fb"></div>
+  </div>
+  <div class="fila" style="justify-content:center"><button class="btn btn-sec" onclick="if(confirm('¿Salir? Se perderá el progreso de esta ronda.'))irMenu()">Salir al menú</button></div>`;
+  if(p.t==="order") pintarOrden();
+  arriba();
+}
+
+function feedback(frac, texto, extra){
+  const p=Q.lista[Q.idx]; Q.puntos[Q.idx]=frac; Q.hecho=true;
+  const cls = frac>=1?"ok":(frac>0?"medio":"mal");
+  const tit = frac>=1?["¡Muy bien! 🌟","¡Correcto! 🌱","¡Perfecto! 🍀","¡Genial! 🌸"][Math.floor(Math.random()*4)]
+            : frac>0?`Casi… ${Math.round(frac*100)} % correcto`:"No es correcto";
+  const ult = Q.idx===Q.lista.length-1;
+  document.getElementById("fb").innerHTML=`
+   <div class="feedback ${cls}"><div class="t">${tit}</div>${extra||""}${texto?`<div>${esc(texto)}</div>`:""}</div>
+   <div class="fila"><button class="btn btn-pri" onclick="siguiente()">${ult?"Ver resultado 🏁":"Siguiente ➜"}</button></div>`;
+  const b=document.getElementById("btnComp"); if(b) b.disabled=true;
+}
+function siguiente(){ Q.hecho=false; if(Q.idx<Q.lista.length-1){Q.idx++;pintarPregunta();} else resultado(); }
+
+function responderMC(k){
+  const p=Q.lista[Q.idx]; if(Q.hecho) return;
+  document.querySelectorAll(".opc").forEach(b=>{ b.disabled=true; const kk=+b.dataset.k; if(kk===0) b.classList.add("ok"); else if(kk===k) b.classList.add("mal"); });
+  feedback(k===0?1:0, p.e, k===0?"":`<div><b>Respuesta correcta:</b> ${esc(p.o[0])}</div>`);
+}
+function responderTF(v){
+  const p=Q.lista[Q.idx]; if(Q.hecho) return;
+  document.querySelectorAll(".opc").forEach(b=>{ b.disabled=true; const bv=b.dataset.v==="1"; if(bv===p.a) b.classList.add("ok"); else if(bv===v) b.classList.add("mal"); });
+  feedback(v===p.a?1:0, p.e);
+}
+function revisarListo(){ const p=Q.lista[Q.idx]; const ok=p.filas.every((_,k)=>document.getElementById("s"+k).value); document.getElementById("btnComp").disabled=!ok; }
+function comprobarMatch(){
+  const p=Q.lista[Q.idx]; let bien=0;
+  p.filas.forEach((f,k)=>{ const s=document.getElementById("s"+k), d=document.getElementById("pr"+k); s.disabled=true;
+    if(s.value===f[1]){bien++;d.classList.add("ok");} else {d.classList.add("mal"); d.insertAdjacentHTML("beforeend",`<div class="correcta">✔ ${esc(f[1])}</div>`);} });
+  feedback(bien/p.filas.length, p.e||"");
+}
+function revisarListoFill(){ const p=Q.lista[Q.idx]; document.getElementById("btnComp").disabled=!p.huecos.every((_,k)=>document.getElementById("h"+k).value); }
+function comprobarFill(){
+  const p=Q.lista[Q.idx]; let bien=0, falt=[];
+  p.huecos.forEach((c,k)=>{ const s=document.getElementById("h"+k); s.disabled=true; if(s.value===c){bien++;s.classList.add("ok");} else {s.classList.add("mal");falt.push(c);} });
+  feedback(bien/p.huecos.length, p.e||"", falt.length?`<div><b>Palabras correctas que faltaban:</b> ${falt.map(esc).join(", ")}</div>`:"");
+}
+function pintarOrden(){
+  const p=Q.lista[Q.idx];
+  const quedan=p.pool.filter(k=>!p.sel.includes(k));
+  document.getElementById("ordenZona").innerHTML=`
+    <div style="font-size:.9rem;color:var(--gris);margin-bottom:6px">Toca los pasos en el orden correcto:</div>
+    <div class="orden-sel">${p.sel.length?p.sel.map((k,i)=>`<div class="paso" id="ps${i}"><span class="n">${i+1}</span>${esc(p.p[k])}</div>`).join(""):`<div class="vacio">Aquí aparecerá tu secuencia</div>`}</div>
+    <div class="orden-pool">${quedan.map(k=>`<button class="paso" onclick="elegirPaso(${k})"><span class="n" style="background:#c6d6b8">?</span>${esc(p.p[k])}</button>`).join("")}</div>`;
+  document.getElementById("btnComp").disabled = p.sel.length!==p.p.length || Q.hecho;
+}
+function elegirPaso(k){ if(Q.hecho) return; Q.lista[Q.idx].sel.push(k); pintarOrden(); }
+function borrarOrden(){ if(Q.hecho) return; Q.lista[Q.idx].sel=[]; pintarOrden(); }
+function comprobarOrden(){
+  const p=Q.lista[Q.idx]; let bien=0;
+  p.sel.forEach((k,i)=>{ const d=document.getElementById("ps"+i); if(k===i){bien++;d.classList.add("ok");} else d.classList.add("mal"); });
+  const frac = bien===p.p.length?1:(bien/p.p.length)*0.5;
+  feedback(frac,"", bien===p.p.length?"":`<div><b>Orden correcto:</b><ol style="margin:6px 0 0;padding-left:22px">${p.p.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>`);
+}
+
+/* ================== RESULTADO ================== */
+function resultado(){
+  const n=Q.lista.length, suma=Q.puntos.reduce((a,b)=>a+(b||0),0), pct=Math.round(suma/n*100), nota=suma/n*10;
+  const est = pct>=90?"⭐⭐⭐":pct>=70?"⭐⭐☆":pct>=50?"⭐☆☆":"☆☆☆";
+  const msg = pct>=90?"¡Lo dominas! Estás listo/a para el examen.":pct>=70?"¡Muy bien! Repasa los fallos y lo bordas.":pct>=50?"Vas por buen camino. Vuelve a leer la teoría y repite.":"Toca repasar. Lee la teoría con calma y vuelve a intentarlo.";
+  const fallos=Q.lista.map((p,i)=>({p,f:Q.puntos[i]})).filter(x=>x.f<1);
+  let tit;
+  if(Q.modo==="bloque"){ const id=BLOQUES[Q.bi].id; S.mejores[id]=Math.max(S.mejores[id]||0,pct); tit=BLOQUES[Q.bi].ico+" "+BLOQUES[Q.bi].titulo; }
+  else { S.simulacro=Math.max(S.simulacro||0,nota); tit="📝 Simulacro de examen"; }
+  guardar();
+  $app.innerHTML=`
+  <div class="tarjeta centro">
+    <h2>${tit}</h2>
+    <div class="estrellas">${est}</div>
+    <div class="nota">${Q.modo==="sim"?nota.toFixed(1).replace(".",",")+" / 10":pct+" %"}</div>
+    <p>${msg}</p>
+    <div class="fila" style="justify-content:center">
+      ${Q.modo==="bloque"?`<button class="btn btn-pri" onclick="empezarBloque(${Q.bi})">🔁 Repetir bloque</button><button class="btn btn-sec" onclick="irTeoria(${Q.bi})">📖 Ver teoría</button>`
+        :`<button class="btn btn-flor" onclick="empezarSimulacro()">🔁 Otro simulacro</button>`}
+      ${fallos.length?`<button class="btn btn-sec" onclick="repetirFallos()">🎯 Repetir solo los fallos (${fallos.length})</button>`:""}
+      <button class="btn btn-sec" onclick="irMenu()">🏠 Menú</button>
+    </div>
+  </div>
+  ${fallos.length?`<div class="tarjeta"><h3>Preguntas para repasar</h3><ul class="lista-fallos">${fallos.map(x=>`<li>${esc(x.p.q)}${Q.modo==="sim"?` <span style="color:var(--gris);font-size:.85rem">(${BLOQUES[x.p._b].titulo})</span>`:""}</li>`).join("")}</ul></div>`:""}`;
+  Q.fallos=fallos.map(x=>x.p);
+  arriba();
+}
+function repetirFallos(){
+  const base=Q.fallos.map(p=>{ const o={...p}; ["orden","opciones","filas","pool","sel","huecos","trozos"].forEach(k=>delete o[k]); return o; });
+  Q={modo:"fallos",bi:Q.bi,lista:base.map(prepararPregunta),idx:0,puntos:[],hecho:false,_modoOrig:Q.modo};
+  pintarPregunta();
+}
+// los repasos de fallos no cuentan para el récord
+const _resultadoOrig=resultado;
+resultado=function(){
+  if(Q.modo!=="fallos") return _resultadoOrig();
+  const n=Q.lista.length, suma=Q.puntos.reduce((a,b)=>a+(b||0),0), pct=Math.round(suma/n*100);
+  $app.innerHTML=`<div class="tarjeta centro"><h2>🎯 Repaso de fallos</h2><div class="nota">${pct} %</div>
+   <p>${pct===100?"¡Ya no se te escapa ninguna!":"Sigue practicando esas preguntas."}</p>
+   <div class="fila" style="justify-content:center"><button class="btn btn-sec" onclick="irMenu()">🏠 Menú</button></div></div>`;
+  arriba();
+};
+
+function descargarInforme(){
+  const f=new Date();
+  let t=`INFORME DE REPASO · Hongos, algas y plantas (1º ESO)\nAlumno/a: ${S.nombre}\nFecha: ${f.toLocaleDateString("es-ES")} ${f.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})}\n\nMEJOR RESULTADO POR BLOQUE\n`;
+  BLOQUES.forEach((b,i)=>{ const m=S.mejores[b.id]; t+=`${i+1}. ${b.titulo}: ${m!=null?m+" %":"sin hacer"}\n`; });
+  t+=`\nSimulacro de examen (mejor nota): ${S.simulacro!=null?S.simulacro.toFixed(1).replace(".",",")+" / 10":"sin hacer"}\n`;
+  const blob=new Blob([t],{type:"text/plain;charset=utf-8"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download=`informe_hongos_algas_plantas_${S.nombre.replace(/\s+/g,"_")}.txt`; document.body.appendChild(a); a.click(); a.remove();
+}
+
+/* ================== ARRANQUE ================== */
+if(S.nombre) irMenu(); else irInicio();
+</script>
+</body>
+</html>
